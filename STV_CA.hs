@@ -3,6 +3,14 @@ import Data.List
 
 -- Author: Emmanuel Sedicol
 
+-- CLEANNING OF INPUT ARRAY --
+-- Step 1: drop first two items as it has no use in this context 
+votes_s1 = map (drop 2) dirtyVotes
+
+-- Step 2: zip first item to rest of item
+votes = map (zip (head votes_s1)) (drop 1 votes_s1)
+
+-- array pattern [index, name, v1, v2, v3 ,v4 ,v4]
 dirtyVotes :: [[String]]
 dirtyVotes = [
     ["","","D. Abbott","E. Balls","A. Burbhm","D. Milliband","E. Milliband"],
@@ -286,3 +294,7 @@ dirtyVotes = [
     ["265","Mr D Wright MP  ","*","1","4","2","3"],
     ["266","Mr I D Wright MP ","5","1","3","4","2"],
     [""]]
+
+    -- [["","","1","2"],["","","3","4"],["","","5","6"]]
+
+    
