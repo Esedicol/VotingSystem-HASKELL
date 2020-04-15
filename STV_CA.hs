@@ -1,16 +1,49 @@
+-- Author: Emmanuel Sedicol
 import Debug.Trace
 import Data.List
+import Data.List (sortBy)
+import Data.Function (on)
 
--- Author: Emmanuel Sedicol
+weight :: Double
+weight = 1000
 
--- CLEANNING OF INPUT ARRAY --
--- Step 1: drop first two items as it has no use in this context 
-votes_s1 = map (drop 2) dirtyVotes
+type Candidate = (String, [Int])
 
--- Step 2: zip first item to rest of item
-votes = map (zip (head votes_s1)) (drop 1 votes_s1)
+-- quota :: Int
+-- quota = ((length votes * weight) `div` (candidates + 1)) + 1
 
--- array pattern [index, name, v1, v2, v3 ,v4 ,v4]
+-- change votes from String to Integer
+voteConversion :: String -> Int  
+voteConversion a | a == "1" = 1| a == "2" = 2 | a == "3" = 3
+                  | a == "4" = 4 | a == "5" = 5| otherwise = 0
+
+--------------------- DATA -------------------------
+votes :: [[Int]]
+votes = map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes))
+
+candidates :: [String]
+candidates = [(x) | x <- drop 2 (head dirtyVotes)]
+
+cleanVotes :: [[(String, Int)]]
+cleanVotes = filter (/=[]) (map removeBlankVotes (map (zip candidates) (votes)))
+
+sortedCleanVotes :: [[(String, Int)]]
+sortedCleanVotes = map sortTuplesAscending cleanVotes
+
+--------------------- TUPLE FUNCTIONS -------------------------
+sortTuplesDescending :: Ord b => [(a, b)] -> [(a, b)]
+sortTuplesDescending = sortBy (flip compare `on` snd)
+
+sortTuplesAscending :: Ord b => [(a, b)] -> [(a, b)]
+sortTuplesAscending = sortBy (compare `on` snd)
+
+removeBlankVotes :: (Eq b, Num b) => [(a, b)] -> [(a, b)]
+removeBlankVotes xs = [(fst x, snd x) | x <- xs, snd x /= 0]
+
+removeDuplicates :: Eq a => [a] -> [a]
+removeDuplicates []     = []
+removeDuplicates (x:xs) = x : filter (/= x) (removeDuplicates xs)
+
 dirtyVotes :: [[String]]
 dirtyVotes = [
     ["","","D. Abbott","E. Balls","A. Burbhm","D. Milliband","E. Milliband"],
@@ -295,6 +328,11 @@ dirtyVotes = [
     ["266","Mr I D Wright MP ","5","1","3","4","2"],
     [""]]
 
-    -- [["","","1","2"],["","","3","4"],["","","5","6"]]
 
-    
+s = [[0,0,0,1,0],[0,0,0,0,1],[0,0,0,0,0],[0,1,0,3,2], [0,0,0,0,0], []]
+
+a = [ 
+    [("D. Abbott",5),("E. Balls",2),("A. Burbhm",3),("D. Milliband",1),("E. Milliband",4)],
+    [("D. Abbott",0),("E. Balls",0),("A. Burbhm",0),("D. Milliband",1),("E. Milliband",0)],
+    [("D. Abbott",0),("E. Balls",0),("A. Burbhm",0),("D. Milliband",0),("E. Milliband",0)]
+    ]
