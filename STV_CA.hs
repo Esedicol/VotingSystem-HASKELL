@@ -19,7 +19,7 @@ voteConversion a | a == "1" = 1| a == "2" = 2 | a == "3" = 3
 
 --------------------- DATA -------------------------
 votes :: [[Int]]
-votes = map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes))
+votes = map removeDuplicates (map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes)))
 
 candidates :: [String]
 candidates = [(x) | x <- drop 2 (head dirtyVotes)]
@@ -40,9 +40,22 @@ sortTuplesAscending = sortBy (compare `on` snd)
 removeBlankVotes :: (Eq b, Num b) => [(a, b)] -> [(a, b)]
 removeBlankVotes xs = [(fst x, snd x) | x <- xs, snd x /= 0]
 
-removeDuplicates :: Eq a => [a] -> [a]
-removeDuplicates []     = []
-removeDuplicates (x:xs) = x : filter (/= x) (removeDuplicates xs)
+--------------------- LIST FUNCTIONS -------------------------
+countDuplicates :: Eq a => a -> [a] -> Int
+countDuplicates x xs = length [y | y <- xs, x == y]
+
+changeToZero :: Num p1 => p2 -> p1
+changeToZero x = 0 
+
+checkDuplicates :: (Eq p, Num p) => p -> [p] -> p
+checkDuplicates x xs = 
+    if countDuplicates x xs > 0
+    then changeToZero x
+    else x
+
+removeDuplicates :: (Eq a, Num a) => [a] -> [a]
+removeDuplicates [] = [] 
+removeDuplicates (x:xs) = checkDuplicates x xs : removeDuplicates xs
 
 dirtyVotes :: [[String]]
 dirtyVotes = [
@@ -327,12 +340,3 @@ dirtyVotes = [
     ["265","Mr D Wright MP  ","*","1","4","2","3"],
     ["266","Mr I D Wright MP ","5","1","3","4","2"],
     [""]]
-
-
-s = [[0,0,0,1,0],[0,0,0,0,1],[0,0,0,0,0],[0,1,0,3,2], [0,0,0,0,0], []]
-
-a = [ 
-    [("D. Abbott",5),("E. Balls",2),("A. Burbhm",3),("D. Milliband",1),("E. Milliband",4)],
-    [("D. Abbott",0),("E. Balls",0),("A. Burbhm",0),("D. Milliband",1),("E. Milliband",0)],
-    [("D. Abbott",0),("E. Balls",0),("A. Burbhm",0),("D. Milliband",0),("E. Milliband",0)]
-    ]
