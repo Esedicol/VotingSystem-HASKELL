@@ -1,5 +1,11 @@
 module DATA where
 
+weight :: Int
+weight = 1000
+
+numberOfCandidates :: Int
+numberOfCandidates = 4
+
 dirtyVotes :: [[String]]
 dirtyVotes = [
     ["","","D. Abbott","E. Balls","A. Burbhm","D. Milliband","E. Milliband"],

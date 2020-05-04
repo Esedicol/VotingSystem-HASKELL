@@ -10,21 +10,15 @@ import System.Environment
 import TupleFunc
 import DATA
 
-weight :: Int
-weight = 1000
-
-numberOfCandidates :: Int
-numberOfCandidates = 4
-
 quota :: Int
 quota = ((length stdVotes) `div` (numberOfCandidates + 1)) + 1
 
+--------------------- FORMAT AND CLEAN DATA -------------------------
 -- change votes from String to Integer
 voteConversion :: String -> Int  
 voteConversion a | a == "1" = 1| a == "2" = 2 | a == "3" = 3
                   | a == "4" = 4 | a == "5" = 5| otherwise = 0
 
---------------------- DATA -------------------------
 votes :: [[Int]]
 votes = map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes))
 
@@ -69,14 +63,17 @@ rmempty = filter (/= [])
 --                 [c]    -> c
 --                 (c:cs) -> winner' (elim c bs)
           
-firstVotes = countVoteFrequency (map (take 1) stdVotes2)
-secondVotes = countVoteFrequency (map head $ map fst stdVotes)
+getVotesByFirstElement :: String -> p -> [[String]]
+getVotesByFirstElement element xs = [ x | x <- stdVotes2, head x == element]
 
 getVotesByPreference :: Ord a => Int -> [[a]] -> [(a, Int)]
 getVotesByPreference n xs = [(head $ fst x, snd x) | x <- freq n xs]
     where
-        freq i xs = countVoteFrequency $ rmempty (map (drop (i - 1)) (map (take i) xs))    
-        
+        freq i xs = countVoteFrequency $ rmempty (map (drop (i - 1)) (map (take i) xs))   
+
+getVotesOverQuotaValue :: [(a, Int)] -> [(a, Int)]
+getVotesOverQuotaValue xs = [(fst x, snd x) | x <- xs, snd x > quota]     
+
 a = [ 
     (["D. Milliband","E. Milliband","A. Burbhm","E. Balls","D. Abbott"],1000.0),
     (["D. Milliband","E. Milliband","E. Balls","A. Burbhm","D. Abbott"],1000.0),
@@ -87,6 +84,7 @@ x = [
     [("D",1),("E",2),("C",3),("B",3),("A",4)],
     [("D",1),("E",2),("C",2),("B",3),("A",4)],
     [("D",1),("E",2),("C",3),("B",4),("A",4)]]
+
 
 
 
