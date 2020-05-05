@@ -4,6 +4,9 @@ import Data.List
 import Data.List (sortBy)
 import Data.Function (on)
 
+addTups :: Num b => (a1, b) -> (a2, b) -> (a1, b)
+addTups (a1,b1) (a2,b2) = (a1, (b1 + b2))
+
 sortTuplesAscending :: Ord b => [(a, b)] -> [(a, b)]
 sortTuplesAscending = sortBy (compare `on` snd)
 

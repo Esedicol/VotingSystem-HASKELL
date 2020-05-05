@@ -1,10 +1,37 @@
 module DATA where
 
+import TupleFunc
+
 weight :: Int
 weight = 1000
 
 numberOfCandidates :: Int
 numberOfCandidates = 4
+
+--------------------- FORMAT AND CLEAN DATA -------------------------
+-- change votes from String to Integer
+voteConversion :: String -> Int  
+voteConversion a | a == "1" = 1| a == "2" = 2 | a == "3" = 3
+                  | a == "4" = 4 | a == "5" = 5| otherwise = 0
+
+votes :: [[Int]]
+votes = map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes))
+
+candidates :: [String]
+-- candidates = [(x) | x <- drop 2 (head dirtyVotes)]
+candidates = ["A", "B", "C", "D", "E"]
+
+sortedVotes :: [[(String, Int)]]
+sortedVotes = filter (/=[]) $ map sortTuplesAscending $ map removeBlankVotes $ map (zip candidates) (votes)
+
+cleanVotes :: [[(String, Int)]]
+cleanVotes = filter (/=[]) $ map removeBlankVotes $ map checkPreferenceOrder (map checkDuplicatesInTuple sortedVotes)
+
+stdVotesWithWeights :: [([String], Int)]
+stdVotesWithWeights = map (\xs -> ([fst x | x <- xs], weight)) cleanVotes
+
+stdVotes :: [[String]]
+stdVotes = map (\xs -> [fst x | x <- xs]) cleanVotes
 
 dirtyVotes :: [[String]]
 dirtyVotes = [
