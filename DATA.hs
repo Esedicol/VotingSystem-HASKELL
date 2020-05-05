@@ -1,3 +1,4 @@
+-- Author: Emmanuel Sedicol
 module DATA where
 
 import TupleFunc
@@ -19,7 +20,7 @@ votes = map (map voteConversion) (drop 1 (map (drop 2) dirtyVotes))
 
 candidates :: [String]
 -- candidates = [(x) | x <- drop 2 (head dirtyVotes)]
-candidates = ["A", "B", "C", "D", "E"]
+candidates = ["A1", "B2", "C3", "D4", "E5"]
 
 sortedVotes :: [[(String, Int)]]
 sortedVotes = filter (/=[]) $ map sortTuplesAscending $ map removeBlankVotes $ map (zip candidates) (votes)

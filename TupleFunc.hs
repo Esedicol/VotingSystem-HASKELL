@@ -1,3 +1,4 @@
+-- Author: Emmanuel Sedicol
 module TupleFunc where
 
 import Data.List
@@ -6,6 +7,12 @@ import Data.Function (on)
 
 addTups :: Num b => (a1, b) -> (a2, b) -> (a1, b)
 addTups (a1,b1) (a2,b2) = (a1, (b1 + b2))
+
+addListsOfTups :: Num b => [(a1, b)] -> [(a2, b)] -> [(a1, b)]
+addListsOfTups [] [] = []
+addListsOfTups [] _ = []
+addListsOfTups _ [] = []
+addListsOfTups (x:xs) (y:ys) = addTups x y : addListsOfTups xs ys
 
 sortTuplesAscending :: Ord b => [(a, b)] -> [(a, b)]
 sortTuplesAscending = sortBy (compare `on` snd)
