@@ -21,12 +21,12 @@ voteConversion a | a == "1" = 1| a == "2" = 2 | a == "3" = 3
 votes :: [[String]] -> [[Int]]
 votes dataVotes = map (map voteConversion) (drop 1 (map (drop 2) dataVotes))
 
-candidates :: [String]
--- candidates = [(x) | x <- drop 2 (head dirtyVotes)]
-candidates = ["A1", "B2", "C3", "D4", "E5"]
+candidates :: [[String]] -> [String]
+candidates dataVotes = [(x) | x <- drop 2 (head dataVotes)]
+-- candidates = ["A1", "B2", "C3", "D4", "E5"]
 
 sortedVotes :: [[String]] -> [[(String, Int)]]
-sortedVotes dataVotes = filter (/=[]) $ map sortTuplesAscending $ map removeBlankVotes $ map (zip candidates) (votes dataVotes)
+sortedVotes dataVotes = filter (/=[]) $ map sortTuplesAscending $ map removeBlankVotes $ map (zip (candidates dataVotes)) (votes dataVotes)
 
 cleanVotes :: [[String]] -> [[(String, Int)]]
 cleanVotes dataVotes = filter (/=[]) $ map removeBlankVotes $ map checkPreferenceOrder (map checkDuplicatesInTuple (sortedVotes dataVotes))
