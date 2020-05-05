@@ -28,6 +28,7 @@ candidates dataVotes = [(x) | x <- drop 2 (head dataVotes)]
 sortedVotes :: [[String]] -> [[(String, Int)]]
 sortedVotes dataVotes = filter (/=[]) $ map sortTuplesAscending $ map removeBlankVotes $ map (zip (candidates dataVotes)) (votes dataVotes)
 
+-- remove "0" in the list, cleaned items after any duplicates and removed any items after a broken order
 cleanVotes :: [[String]] -> [[(String, Int)]]
 cleanVotes dataVotes = filter (/=[]) $ map removeBlankVotes $ map checkPreferenceOrder (map checkDuplicatesInTuple (sortedVotes dataVotes))
 

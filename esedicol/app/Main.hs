@@ -14,9 +14,9 @@ main = do
     let cleanData = stdVotes csv
     let preferenceVotes = getVotesByPreference cleanData 1
 
-    putStrLn "\n\t ------------------------------------------------------------------------"
+    putStrLn "\n--------------------------------------------------------------------------------------"
     putStrLn "\t 🐶🐶🐶 Welcome, please specify the number of candidates to elect 🐶🐶🐶"
-    putStrLn "\t ------------------------------------------------------------------------\n"
+    putStrLn "---------------------------------------------------------------------------------------\n"
     choice <- getLine
 
     if choice == "1" then do  
