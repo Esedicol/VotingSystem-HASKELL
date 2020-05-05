@@ -1,6 +1,7 @@
 -- Author: Emmanuel Sedicol
-module TupleFunc where
+module TupleFunctions.Tuple where
 
+import Data.List
 import Data.List (sortBy)
 import Data.Function (on)
 

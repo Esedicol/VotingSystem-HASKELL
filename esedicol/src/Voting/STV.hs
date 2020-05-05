@@ -1,9 +1,10 @@
 -- Author: Emmanuel Sedicol
+module Voting.STV where
+
 import Data.List
 
-
-import TupleFunc
-import DATA
+import TupleFunctions.Tuple
+import Clean.Clean
 
 quota :: Int
 quota = 54

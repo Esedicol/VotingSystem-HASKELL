@@ -1,0 +1,64 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 99b35891bd076974d91c8611698b7303769084bb0a64f34b48f723227a1a478c
+
+name:           esedicol
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/esedicol#readme>
+homepage:       https://github.com/githubuser/esedicol#readme
+bug-reports:    https://github.com/githubuser/esedicol/issues
+author:         Emmanuel Sedicol
+maintainer:     example@example.com
+copyright:      2020 Emmanuel Sedicol
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/esedicol
+
+library
+  exposed-modules:
+      Lib
+      Clean.Clean
+      TupleFunctions.Tuple
+      Voting.STV
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , split
+  default-language: Haskell2010
+
+executable esedicol-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_esedicol
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , esedicol
+  default-language: Haskell2010
+
+test-suite esedicol-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_esedicol
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , esedicol
+  default-language: Haskell2010
