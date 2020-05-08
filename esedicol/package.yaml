@@ -29,6 +29,7 @@ library:
     - Clean.Clean
     - TupleFunctions.Tuple
     - Voting.STV
+    - Voting.AlternativeVoting
   other-modules: []
   dependencies:
     - split

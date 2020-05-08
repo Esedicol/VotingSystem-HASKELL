@@ -22,7 +22,6 @@ rmempty :: [[String]] -> [[String]]
 rmempty = filter (/= [])
 
 -- count of all unique value in the selected preference
-
 getVotesByPreference :: [[String]] -> Int -> [(String, Int)]
 getVotesByPreference votes n = [(head $ fst x, snd x) | x <- freq votes n]
     where
@@ -104,5 +103,10 @@ orderOfVotes = ["1st", "2nd", "3rd", "4th"]
 
 finalStanding pref votes choice = take choice $ zip orderOfVotes (thirdRoundFinal pref votes)
 pp = getVotesByPreference stdVotes 1
+
+
+
+
+
 
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 99b35891bd076974d91c8611698b7303769084bb0a64f34b48f723227a1a478c
+-- hash: 6038c372664634177765d48107bfe92d5e1572ba9691bc765b5e2cd01f00a677
 
 name:           esedicol
 version:        0.1.0.0
@@ -31,6 +31,7 @@ library
       Clean.Clean
       TupleFunctions.Tuple
       Voting.STV
+      Voting.AlternativeVoting
   hs-source-dirs:
       src
   build-depends:
